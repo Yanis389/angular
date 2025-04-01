@@ -5,15 +5,17 @@ import { ref } from "firebase/database";
 import { BehaviorSubject } from 'rxjs';
 import { Todo } from '../interfaces/todo'; // Assurez-vous d'importer l'interface Todo depuis le bon chemin
 import { push } from "firebase/database";
+import { onValue } from "firebase/database";
+
 const firebaseConfig = {
-  apiKey: "AIzaSyBTFUsYBH3BTMg0efzhrK-J96DOxDvuxfA",
-  authDomain: "mytodo-8ae30.firebaseapp.com",
-  databaseURL: "https://mytodo-8ae30-default-rtdb.europe-west1.firebasedatabase.app",
-  projectId: "mytodo-8ae30",
-  storageBucket: "mytodo-8ae30.firebasestorage.app",
-  messagingSenderId: "794725784750",
-  appId: "1:794725784750:web:80e04ea4359909e246e13f",
-  measurementId: "G-2HHTVCH6TB"
+  apiKey: "AIzaSyDAwRjNxRNGbU1nx73t93tZ0Y0QjTCeDwU",
+  authDomain: "test-80824.firebaseapp.com",
+  databaseURL: "https://test-80824-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "test-80824",
+  storageBucket: "test-80824.firebasestorage.app",
+  messagingSenderId: "717468217757",
+  appId: "1:717468217757:web:dca8db950eb3f82e41ff74",
+  measurementId: "G-0H96NEJR50"
 };
 
 
@@ -30,9 +32,21 @@ export class FirebaseService {
   todos$ = this.todoSubject.asObservable();
 
 
-  constructor() { }
+  constructor() { 
+    this.listenToTodos();
+  }
 
-  addTodo(title: string): void {
+listenToTodos(): void {
+    onValue(this.todoRef, (snapshot) => {
+      const todos: Todo[] = [];
+      snapshot.forEach((childSnapshot) => {
+        todos.push({ id: childSnapshot.key!, ...childSnapshot.val() });
+      });
+      this.todoSubject.next(todos);
+    });
+}
+
+addTodo(title: string): void {
     push(this.todoRef, {
       title: title,
       done: false,
@@ -44,6 +58,8 @@ export class FirebaseService {
       this.todoSubject.next(todos);
     });
   }
+
+
 
   
 }

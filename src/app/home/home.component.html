@@ -7,7 +7,7 @@
 <section class="row mt-2">
 
     <ul class="list-group col-md-6 mx-auto">
-      <li class="list-group-item" *ngFor="let todo of todos,let i = index" [ngClass]="
+      <li class="list-group-item" *ngFor="let todo of todos$ | async" [ngClass]="
       {
         notDone:todo.done,
         isDone:!todo.done
@@ -19,7 +19,7 @@
           <button class="btn btn-dark" (click)="OnChangeStatus(todo)" [innerHTML]="(todo.done) ? 'Validé': 'En attente'"></button>
           <!-- Lorsque l'on clique sur le bouton, on appelle la méthode OnChangeStatus en lui passant la tâche courante (todo) et qui inverse la valeur de la propriété done -->
         </div>
-        <button class="btn btn-danger mt-2" (click)="OnRemoveTask(i)">Supprimer</button>
+        <button class="btn btn-danger mt-2" >Supprimer</button>
         <div>
           <input type="text" name="" id="" class="form-control mt-2" [(ngModel)]="todo.title">
         </div>
@@ -29,6 +29,6 @@
   
   </section>
   <div class="col-md-6 mx-auto mt-2 ">
-    <input type="text" class="form-control mt-2" [(ngModel)]="newTodo.title">
+    <input type="text" class="form-control mt-2" [(ngModel)]="newTodoTitle">
     <button class="btn btn-warning mt-2" (click)="OnAddTask()">Ajouter une tâche</button>
   </div>
