@@ -1,0 +1,15 @@
+<div class="d-flex justify-content-around mt-5">  
+    <label>Premier nombre</label><br>  
+    <input type="number" [(ngModel)]="firstNumber">    
+    <label>Opérateur</label><br>    
+    <select name="operartor" id="operator" [(ngModel)]="operator">       
+        <option value="+">+ (Plus)</option>       
+        <option value="-">- (Moins)</option>       
+        <option value="*">* (Multiplier)</option>       
+        <option value="/">/ (Diviser)</option>    
+    </select>    
+    <label>Deuxième nombre</label><br>    
+    <input type="number" [(ngModel)]="secondNumber">    <br>
+</div>
+<button class="form-control btn btn-success mt-2" (click)="calculate()">Calculer</button>
+<p class="fw-bold">{{ result }}</p>

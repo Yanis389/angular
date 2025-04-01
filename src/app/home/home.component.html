@@ -1,0 +1,34 @@
+<!-- *ngFor permet de parcourir un tableau et d'afficher chaque élément (directive structurelle) -->
+<!-- property binding [disabled] permet de désactiver le bouton si la tâche est déjà faite  les [] permettent de lier une propriété d'un composant (ts) à une propriété d'un template (html) -->
+<!-- (Click) permet d'appeler une méthode du composant (ts) lors d'un clic sur le bouton  les () permettent de lier un événement du template (html) à une méthode du composant (ts) -->
+<!-- [ngClass] permet d'appliquer une classe CSS conditionnellement en fonction de l'état de la tâche (done)  les {} permettent de lier une propriété d'un composant (ts) à une propriété d'un template (html) -->
+<!-- [(ngModel)] permet de lier une propriété d'un composant (ts) à une propriété d'un template (html)  les [] permettent de lier une propriété d'un composant (ts) à une propriété d'un template (html) -->
+<!-- [()] tow way binding (communication bidirectionnelle) permet de lier une propriété d'un composant (ts) à une propriété d'un template (html)  les [] permettent de lier une propriété d'un composant (ts) à une propriété d'un template (html) -->
+<section class="row mt-2">
+
+    <ul class="list-group col-md-6 mx-auto">
+      <li class="list-group-item" *ngFor="let todo of todos,let i = index" [ngClass]="
+      {
+        notDone:todo.done,
+        isDone:!todo.done
+      }">
+        <p>{{todo.title}}</p>
+  
+        <div class="d-flex justify-content-between">
+          <span class="text-muted">{{todo.date | date:'dd/MM/yyyy:HH:mm'}}</span>
+          <button class="btn btn-dark" (click)="OnChangeStatus(todo)" [innerHTML]="(todo.done) ? 'Validé': 'En attente'"></button>
+          <!-- Lorsque l'on clique sur le bouton, on appelle la méthode OnChangeStatus en lui passant la tâche courante (todo) et qui inverse la valeur de la propriété done -->
+        </div>
+        <button class="btn btn-danger mt-2" (click)="OnRemoveTask(i)">Supprimer</button>
+        <div>
+          <input type="text" name="" id="" class="form-control mt-2" [(ngModel)]="todo.title">
+        </div>
+      </li>
+    </ul>
+  
+  
+  </section>
+  <div class="col-md-6 mx-auto mt-2 ">
+    <input type="text" class="form-control mt-2" [(ngModel)]="newTodo.title">
+    <button class="btn btn-warning mt-2" (click)="OnAddTask()">Ajouter une tâche</button>
+  </div>
